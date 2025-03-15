@@ -2,14 +2,11 @@ package com.mystore.app.rest;
 
 import com.mystore.app.entity.Product;
 import com.mystore.app.service.ProductService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/products")
@@ -59,16 +56,41 @@ public class ProductController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    // TODO: API to search products by name
+    @GetMapping("/search")
+    public ResponseEntity<List<Product>> searchProductsByName(@RequestParam("name") String name) {
+        List<Product> products = productService.searchProductsByName(name);
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
 
+    @GetMapping("/filter/category")
+    public ResponseEntity<List<Product>> filterProductsByCategory(@RequestParam("category") String category) {
+        List<Product> products = productService.filterProductsByCategory(category);
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
 
-    // TODO: API to filter products by category
+    @GetMapping("/filter/price")
+    public ResponseEntity<List<Product>> filterProductsByPriceRange(@RequestParam("minPrice") double minPrice, @RequestParam("maxPrice") double maxPrice) {
+        List<Product> products = productService.filterProductsByPriceRange(minPrice, maxPrice);
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
 
-
-    // TODO: API to filter products by price range
-
-
-    // TODO: API to filter products by stock quantity range
+    @GetMapping("/filter/stock")
+    public ResponseEntity<List<Product>> filterProductsByStockQuantityRange(@RequestParam("minStock") int minStock, @RequestParam("maxStock") int maxStock) {
+        List<Product> products = productService.filterProductsByStockQuantityRange(minStock, maxStock);
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
 
 
 }

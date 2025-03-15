@@ -7,13 +7,15 @@ public class Product {
     private String category;
     private Double price;
     private Integer stockQuantity;
+    private String description; // New property
 
-    public Product(Integer id, String name, String category, Double price, Integer stockQuantity) {
+    public Product(Integer id, String name, String category, Double price, Integer stockQuantity, String description) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.price = price;
         this.stockQuantity = stockQuantity;
+        this.description = description; // Initialize new property
     }
 
     public Integer getId() {
@@ -54,6 +56,14 @@ public class Product {
 
     public void setStockQuantity(Integer stockQuantity) {
         this.stockQuantity = stockQuantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
 

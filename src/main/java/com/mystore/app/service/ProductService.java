@@ -1,12 +1,12 @@
 package com.mystore.app.service;
 
-import com.mystore.app.entity.Product;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.mystore.app.entity.Product;
 
 @Service
 public class ProductService {
@@ -15,21 +15,21 @@ public class ProductService {
 
     private List<Product> products = new ArrayList<>(
             Arrays.asList(
-                    new Product(currentId++, "Smartphone", "Electronics", 40000.00, 50),
-                    new Product(currentId++, "Laptop", "Electronics", 50000.00, 30),
-                    new Product(currentId++, "Wireless Headphones", "Electronics", 6000.00, 100),
-                    new Product(currentId++, "T-shirt", "Clothing", 999.00, 200),
-                    new Product(currentId++, "Jeans", "Clothing", 1499.00, 150),
-                    new Product(currentId++, "Leather Jacket", "Clothing", 3000.00, 75),
-                    new Product(currentId++, "Running Shoes", "Footwear", 499.00, 120),
-                    new Product(currentId++, "Sneakers", "Footwear", 599.00, 200),
-                    new Product(currentId++, "Office Chair", "Furniture", 2900.00, 40),
-                    new Product(currentId++, "Desk", "Furniture", 4000.00, 60),
-                    new Product(currentId++, "Blender", "Appliances", 200.00, 80),
-                    new Product(currentId++, "Microwave Oven", "Appliances", 4999.00, 50),
-                    new Product(currentId++, "Coffee Maker", "Appliances", 1399.00, 90),
-                    new Product(currentId++, "Smart Watch", "Electronics", 999.00, 150),
-                    new Product(currentId++, "Bluetooth Speaker", "Electronics", 2499.00, 250)
+                    new Product(currentId++, "Smartphone", "Electronics", 40000.00, 50, "Latest model with advanced features"),
+                    new Product(currentId++, "Laptop", "Electronics", 50000.00, 30, "High performance laptop"),
+                    new Product(currentId++, "Wireless Headphones", "Electronics", 6000.00, 100, "Noise-cancelling headphones"),
+                    new Product(currentId++, "T-shirt", "Clothing", 999.00, 200, "Comfortable cotton t-shirt"),
+                    new Product(currentId++, "Jeans", "Clothing", 1499.00, 150, "Stylish denim jeans"),
+                    new Product(currentId++, "Leather Jacket", "Clothing", 3000.00, 75, "Genuine leather jacket"),
+                    new Product(currentId++, "Running Shoes", "Footwear", 499.00, 120, "Lightweight running shoes"),
+                    new Product(currentId++, "Sneakers", "Footwear", 599.00, 200, "Trendy sneakers"),
+                    new Product(currentId++, "Office Chair", "Furniture", 2900.00, 40, "Ergonomic office chair"),
+                    new Product(currentId++, "Desk", "Furniture", 4000.00, 60, "Spacious office desk"),
+                    new Product(currentId++, "Blender", "Appliances", 200.00, 80, "High-speed blender"),
+                    new Product(currentId++, "Microwave Oven", "Appliances", 4999.00, 50, "Compact microwave oven"),
+                    new Product(currentId++, "Coffee Maker", "Appliances", 1399.00, 90, "Automatic coffee maker"),
+                    new Product(currentId++, "Smart Watch", "Electronics", 999.00, 150, "Feature-rich smart watch"),
+                    new Product(currentId++, "Bluetooth Speaker", "Electronics", 2499.00, 250, "Portable Bluetooth speaker")
             )
     );
 
@@ -54,6 +54,7 @@ public class ProductService {
         p.setPrice(product.getPrice());
         p.setCategory(product.getCategory());
         p.setStockQuantity(product.getStockQuantity());
+        p.setDescription(product.getDescription());
         return p;
     }
 
@@ -73,16 +74,45 @@ public class ProductService {
         return null;
     }
 
-    // TODO: Method to search products by name
+    public List<Product> searchProductsByName(String name) {
+        List<Product> result = new ArrayList<>();
+        for (Product p : products) {
+            if (p.getName().toLowerCase().contains(name.toLowerCase())) {
+                result.add(p);
+            }
+        }
+        return result;
+    }
 
+    public List<Product> filterProductsByCategory(String category) {
+        List<Product> result = new ArrayList<>();
+        for (Product p : products) {
+            if (p.getCategory().equalsIgnoreCase(category)) {
+                result.add(p);
+            }
+        }
+        return result;
+    }
 
-    // TODO: Method to filter products by category
+    public List<Product> filterProductsByPriceRange(double minPrice, double maxPrice) {
+        List<Product> result = new ArrayList<>();
+        for (Product p : products) {
+            if (p.getPrice() >= minPrice && p.getPrice() <= maxPrice) {
+                result.add(p);
+            }
+        }
+        return result;
+    }
 
-
-    // TODO: Method to filter products by price range
-
-
-    // TODO: Method to filter products by stock quantity range
+    public List<Product> filterProductsByStockQuantityRange(int minQuantity, int maxQuantity) {
+        List<Product> result = new ArrayList<>();
+        for (Product p : products) {
+            if (p.getStockQuantity() >= minQuantity && p.getStockQuantity() <= maxQuantity) {
+                result.add(p);
+            }
+        }
+        return result;
+    }
 
     
 }
